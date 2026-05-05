@@ -6,7 +6,7 @@ import { IViaCepGateway } from '../../domain/repositories/viacep.gateway';
 @Injectable()
 export class ViaCepGatewayImpl implements IViaCepGateway {
   // pegando url do .env
-  private readonly baseUrl = process.env.VIACEP_URL || 'https://viacep.com.br/ws';
+  private readonly baseUrl = process.env.VIA_CEP_BASE_URL || 'https://viacep.com.br/ws';
 
   async fetch(cep: string): Promise<Address | null> {
     try {
