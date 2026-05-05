@@ -5,10 +5,13 @@ import { IViaCepGateway } from '../../domain/repositories/viacep.gateway';
 
 @Injectable()
 export class ViaCepGatewayImpl implements IViaCepGateway {
-  private readonly baseUrl = 'https://viacep.com.br/ws';
+  // pegando url do .env
+  private readonly baseUrl = process.env.VIACEP_URL || 'https://viacep.com.br/ws';
 
   async fetch(cep: string): Promise<Address | null> {
     try {
+      console.log('base URL:', this.baseUrl);
+
       // para remover caracter não numerico
       const cleanCep = cep.replace(/\D/g, '');
       const { data } = await axios.get(`${this.baseUrl}/${cleanCep}/json/`, {

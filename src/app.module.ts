@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BullModule } from '@nestjs/bullmq';
 import { ConfigModule } from '@nestjs/config';
 
-// Importações de Infraestrutura
+// import da pasta de infraestrutura
 import { AddressSchema } from './infrastructure/database/address.schema';
 import { AddressRepositoryImpl } from './infrastructure/database/address.repository.impl';
 import { RedisServiceImpl } from './infrastructure/cache/redis.service.impl';
@@ -18,7 +18,7 @@ import { GetAddressUseCase } from './application/use-cases/get-address.use-case'
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    // Configuração do Banco Relacional
+    // config do banco relacional
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST || 'localhost',
@@ -27,10 +27,10 @@ import { GetAddressUseCase } from './application/use-cases/get-address.use-case'
       password: 'password',
       database: 'cep_database',
       entities: [AddressSchema],
-      synchronize: true, // Apenas para o desafio (cria as tabelas sozinho)
+      synchronize: true, // apanas para o teste, cria as tabelas automaticamente
     }),
     TypeOrmModule.forFeature([AddressSchema]),
-    // Configuração do Redis e Fila
+    // config do redis/fila
     BullModule.forRoot({
       connection: {
         host: process.env.REDIS_HOST || 'localhost',
@@ -43,7 +43,6 @@ import { GetAddressUseCase } from './application/use-cases/get-address.use-case'
   ],
   controllers: [AddressController],
   providers: [
-    // Registro dos adaptadores com TOKENS (para inverter a dependência)
     {
       provide: 'IAddressRepository',
       useClass: AddressRepositoryImpl,
@@ -60,7 +59,6 @@ import { GetAddressUseCase } from './application/use-cases/get-address.use-case'
       provide: 'IQueueService',
       useClass: BullMQQueueServiceImpl,
     },
-    // O Caso de Uso precisa das interfaces acima
     {
       provide: GetAddressUseCase,
       useFactory: (cache, repo, viacep, queue) => 
