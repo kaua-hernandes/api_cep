@@ -25,7 +25,7 @@ export class BullMQQueueServiceImpl implements IQueueService {
         type: 'exponential', // aumenta o tempo de espera entre cada tentativa
         delay: 1000, // tempo inicial de 1 segundo
       },
-      removeOnComplete: true, // remove o job da lista de "completados" para economizar mmemoria no redis
+      removeOnComplete: true, // remove o job da lista de completados para economizar mmemoria no redis
       removeOnFail: false, // mantem no redis em caso de falha total para auditoria
     });
   }

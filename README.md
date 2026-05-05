@@ -52,7 +52,7 @@ Após iniciar a aplicação, a documentação interativa está disponível em:
 http://localhost:3000/api/docs
 
 ## Notas sobre decisões técnicas
--Mensageria (Redis + BullMQ): O sistema utiliza uma fila de tarefas em segundo plano para que o usuário receba a resposta instantaneamente, enquanto a gravação no banco de dados acontece de forma assíncrona
+-(Redis + BullMQ): O sistema utiliza uma fila de tarefas em segundo plano para que o usuário receba a resposta instantaneamente, enquanto a gravação no banco de dados acontece de forma assíncrona
 
 -Performance (Lazy Load): Implementação de Cache-on-read com TTL de 1 hora, reduzindo o consumo da API externa e acelerando consultas repetidas através do Redis
 

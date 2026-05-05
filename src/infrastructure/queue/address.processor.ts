@@ -25,7 +25,7 @@ export class AddressProcessor extends WorkerHost {
       await this.addressRepository.save(addressData);
     }
 
-    // atualiza e garante o cache com um TTL de 1h (1 hora = 3600s)
+    // atualiza e garante o cache com um TTL de 1h
     await this.cacheService.set(addressData.cep, addressData, 3600);
     
     console.log(`CEP ${addressData.cep} processado com sucesso.`);
